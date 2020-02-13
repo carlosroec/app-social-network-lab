@@ -9,6 +9,7 @@ Vue.use(VueCookie);
 const state = {
     isAuthenticated: false,
     loginStatus: null,
+    user: null,
 };
 
 const actions = {
@@ -27,11 +28,13 @@ const actions = {
             });
     },
     isAuthenticated({ commit }) {
-        if (!VueCookie.get('lab_auth')) {
+        if (!VueCookie.get('lab_auth') || !VueCookie.get('lab_user')) {
             commit('AUTH_LOGOUT');
 
             return false;
         }
+
+        commit('SET_USER', JSON.parse(VueCookie.get('lab_user')));
 
         Vue.http.headers.common.Authorization = `Bearer ${VueCookie.get('lab_auth')}`;
 
@@ -47,6 +50,11 @@ const mutations = {
             expires: '2592000s', // 30 days
         });
 
+        VueCookie.set('lab_user', JSON.stringify(response.body.user), {
+            expires: '2592000s', // 30 days
+        });
+
+        _state.user = response.body.user;
         _state.authenticated = true;
 
         router.push({ path: '/profile' });
@@ -62,10 +70,18 @@ const mutations = {
             message: response.body.status.message,
         };
     },
+    SET_USER(_state, user) {
+        _state.user = user;
+    },
+};
+
+const getters = {
+    getUser: (_state) => _state.user,
 };
 
 export default {
     state,
     actions,
     mutations,
+    getters,
 };

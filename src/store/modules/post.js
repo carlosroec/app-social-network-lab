@@ -16,6 +16,15 @@ const mutations = {
 };
 
 const actions = {
+    createPost({ commit }, post) {
+        return postDataSource.createPost(post)
+            .then((response) => {
+                console.log(commit);
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+    },
     getMyPosts({ commit }) {
         return postDataSource.getMyPosts()
             .then((response) => {

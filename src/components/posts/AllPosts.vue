@@ -4,7 +4,7 @@
             <div class="bg-white border-t border-b sm:rounded sm:border shadow">
                 <div class="border-b">
                     <div class="flex justify-between px-6 -mb-px">
-                        <h3 class="text-blue-dark py-4 font-normal text-lg">Recent Activity</h3>
+                        <h3 class="text-blue-dark py-4 font-normal text-lg">Actividad Reciente</h3>
                     </div>
                 </div>
                 <div class="px-4 pt-4">
@@ -20,7 +20,6 @@
                         </div>
                     </div>
                     <div v-else>
-                        <Post mode="add" :post="{content:''}" />
                         <div v-for="(post, index) in posts" :key="index">
                             <Post mode="read" :post=post />
                         </div>
