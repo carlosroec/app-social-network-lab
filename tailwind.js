@@ -12,6 +12,14 @@ module.exports = {
     colors: {
       transparent: 'transparent',
 
+      fresh: {
+        900: '#00738C',
+        800: '#81B0B2',
+        700: '#D6EAD4',
+        600: '#EFF2D8',
+        500: '#97A675',
+      },
+
       black: '#000',
       white: '#fff',
 
