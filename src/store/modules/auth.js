@@ -33,13 +33,15 @@ const actions = {
             return false;
         }
 
+        Vue.http.headers.common.Authorization = `Bearer ${VueCookie.get('lab_auth')}`;
+
         return true;
     },
 };
 
 const mutations = {
     AUTH_SUCCESS(_state, response) {
-        Vue.http.headers.common.Authorization = response.body.token;
+        Vue.http.headers.common.Authorization = `Bearer ${response.body.token}`;
 
         VueCookie.set('lab_auth', response.body.token, {
             expires: '2592000s', // 30 days
