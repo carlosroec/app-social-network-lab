@@ -25,6 +25,24 @@ const actions = {
                 console.log(error);
             });
     },
+    updatePost({ commit }, post) {
+        return postDataSource.updatePost(post)
+            .then((response) => {
+                console.log(commit);
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+    },
+    destroyPost({ commit }, postID) {
+        return postDataSource.destroyPost(postID)
+            .then((response) => {
+                console.log(commit);
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+    },
     getMyPosts({ commit }) {
         return postDataSource.getMyPosts()
             .then((response) => {

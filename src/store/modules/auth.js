@@ -27,6 +27,9 @@ const actions = {
                 console.log(error);
             });
     },
+    logout({ commit }) {
+        commit('AUTH_LOGOUT');
+    },
     isAuthenticated({ commit }) {
         if (!VueCookie.get('lab_auth') || !VueCookie.get('lab_user')) {
             commit('AUTH_LOGOUT');
@@ -61,6 +64,7 @@ const mutations = {
     },
     AUTH_LOGOUT() {
         VueCookie.delete('lab_auth');
+        VueCookie.delete('lab_user');
 
         router.push({ path: '/' });
     },

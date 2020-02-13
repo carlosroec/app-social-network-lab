@@ -38,11 +38,6 @@ export default {
     components: {
         Post,
     },
-    data() {
-        return {
-            posts1: ['1'],
-        };
-    },
     computed: {
         ...mapGetters({
             posts: 'getPosts',
