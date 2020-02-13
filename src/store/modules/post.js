@@ -19,8 +19,7 @@ const actions = {
     createPost({ commit }, post) {
         return postDataSource.createPost(post)
             .then((response) => {
-                console.log(commit);
-                console.log(response);
+                commit('SET_POSTS', response);
             }, (error) => {
                 console.log(error);
             });

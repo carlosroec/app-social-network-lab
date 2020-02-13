@@ -86,7 +86,6 @@ export default {
                 userID: this.user._id,
             }).then(() => {
                 this.currentPost = { content: '', isPublic: true, user: { name: '' } };
-                this.$store.dispatch('getMyPosts');
             });
 
             e.preventDefault();
