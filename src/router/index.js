@@ -1,20 +1,30 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 
 import LoginView from '../views/LoginView.vue';
+import ProfileView from '../views/ProfileView.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home,
+        component: LoginView,
+        meta: {
+            title: 'Login',
+        },
     },
     {
-        path: '/login',
-        component: LoginView,
+        path: '/profile',
+        component: ProfileView,
+        meta: {
+            title: 'Mi Perfil',
+            requiresAuth: true,
+        },
+    },
+    {
+        path: '*',
+        redirect: '/',
     },
 ];
 

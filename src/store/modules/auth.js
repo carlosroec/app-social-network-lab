@@ -8,7 +8,7 @@ Vue.use(VueCookie);
 
 const state = {
     isAuthenticated: false,
-    user: null,
+    loginStatus: null,
 };
 
 const actions = {
@@ -18,9 +18,22 @@ const actions = {
                 if (response && response.body && response.body.status.code === 'OK') {
                     commit('AUTH_SUCCESS', response);
                 }
+
+                if (response.body.status.code === 'NO_USER' || response.body.status.code === 'INVALID_PASSWORD') {
+                    commit('AUTH_FAIL', response);
+                }
             }, (error) => {
                 console.log(error);
             });
+    },
+    isAuthenticated({ commit }) {
+        if (!VueCookie.get('lab_auth')) {
+            commit('AUTH_LOGOUT');
+
+            return false;
+        }
+
+        return true;
     },
 };
 
@@ -35,6 +48,17 @@ const mutations = {
         _state.authenticated = true;
 
         router.push({ path: '/profile' });
+    },
+    AUTH_LOGOUT() {
+        VueCookie.delete('lab_auth');
+
+        router.push({ path: '/' });
+    },
+    AUTH_FAIL(_state, response) {
+        _state.loginStatus = {
+            code: response.body.status.code,
+            message: response.body.status.message,
+        };
     },
 };
 

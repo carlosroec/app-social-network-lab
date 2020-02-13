@@ -25,6 +25,10 @@
             />
             <p class="text-red-500 text-xs italic" v-show="errors.indexOf('password') > -1">No puede estar en blanco.</p>
         </div>
+        <div class="flex items-center justify-center pb-2">
+            <p class="text-red-500 text-xs italic" v-show="loginStatus && loginStatus.code === 'NO_USER'">Email no registrado.</p>
+            <p class="text-red-500 text-xs italic" v-show="loginStatus && loginStatus.code === 'INVALID_PASSWORD'">Email y Password incorrectos.</p>
+        </div>
         <div class="flex items-center justify-center">
             <button
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
@@ -34,10 +38,12 @@
             >Login</button>
         </div>
         </form>
-        <p class="text-center text-gray-500 text-xs">&copy;2020</p>
+        <p class="text-center text-gray-500 text-xs">&copy;2020 cgr.</p>
     </div>
 </template>
 <script>
+import { mapState } from 'vuex';
+
 export default {
     name: 'loginForm',
     data() {
@@ -49,6 +55,11 @@ export default {
             },
             errors: [],
         };
+    },
+    computed: {
+        ...mapState({
+            loginStatus: (state) => state.auth.loginStatus,
+        }),
     },
     methods: {
         isValidEmail(value) {
