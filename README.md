@@ -8,6 +8,12 @@ Vue Cookie + JWT
 Tailwind CSS
 ```
 
+## Add a file .env at the project root with the following data
+```
+# API URL
+VUE_APP_API_ROOT=http://localhost:3000/api
+```
+
 ## Project setup
 ```
 npm install
