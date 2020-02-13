@@ -46,17 +46,18 @@
                     </p>
                     <div class="flex flex-row flex-wrap flex-grow mt-6">
                         <div class="w-full md:w-1/2 pt-2">
-                            <svg class="opacity-50 inline-block h-4 w-4 cursor-pointer" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <svg @click="like" class="opacity-25 inline-block h-4 w-4 cursor-pointer" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
                                     <g id="icon-shape">
-                                        <path d="M11,11.7324356 C11.5978014,11.3866262 12,10.7402824 12,10 C12,8.8954305 11.1045695,8 10,8 C8.8954305,8 8,8.8954305 8,10 C8,10.7402824 8.40219863,11.3866262 9,11.7324356 L9,20 L11,20 L11,11.7324356 Z M14.2426407,14.2426407 C15.3284271,13.1568542 16,11.6568542 16,10 C16,6.6862915 13.3137085,4 10,4 C6.6862915,4 4,6.6862915 4,10 C4,11.6568542 4.67157288,13.1568542 5.75735931,14.2426407 L7.17157288,12.8284271 C6.44771525,12.1045695 6,11.1045695 6,10 C6,7.790861 7.790861,6 10,6 C12.209139,6 14,7.790861 14,10 C14,11.1045695 13.5522847,12.1045695 12.8284271,12.8284271 L14.2426407,14.2426407 L14.2426407,14.2426407 Z M17.0710678,17.0710678 C18.8807119,15.2614237 20,12.7614237 20,10 C20,4.4771525 15.5228475,0 10,0 C4.4771525,0 0,4.4771525 0,10 C0,12.7614237 1.11928813,15.2614237 2.92893219,17.0710678 L4.34314575,15.6568542 C2.8954305,14.209139 2,12.209139 2,10 C2,5.581722 5.581722,2 10,2 C14.418278,2 18,5.581722 18,10 C18,12.209139 17.1045695,14.209139 15.6568542,15.6568542 L17.0710678,17.0710678 Z" id="Combined-Shape"></path>
+                                        <path d="M11.0010436,0 C9.89589787,0 9.00000024,0.886706352 9.0000002,1.99810135 L9,8 L1.9973917,8 C0.894262725,8 0,8.88772964 0,10 L0,12 L2.29663334,18.1243554 C2.68509206,19.1602453 3.90195042,20 5.00853025,20 L12.9914698,20 C14.1007504,20 15,19.1125667 15,18.000385 L15,10 L12,3 L12,0 L11.0010436,0 L11.0010436,0 Z M17,10 L20,10 L20,20 L17,20 L17,10 L17,10 Z" id="Fill-97"></path>
                                     </g>
                                 </g>
                             </svg>
+                            <span class="absolute text-gray-600 ml-2 text-sm pt-1">{{votes}}</span>
                         </div>
                         <div class="w-full md:w-1/2">
                             <div class="flex justify-end" v-show="!showConfirmDelete">
-                                <span class="text-gray-400 text-sm italic py-1">{{labelDate.show}} {{labelDate.value | moment("from", "now")}}</span>
+                                <span class="text-gray-500 text-sm py-1">{{labelDate.show}} {{labelDate.value | moment("from", "now")}}</span>
                                 <a href="#" class="bg-fresh-800 hover:bg-fresh-700 text-fresh-700 hover:text-fresh-800 py-1 px-2 rounded ml-2" @click="switchToEditMode" v-show="user._id === currentPost.user._id">editar</a>
                                 <a href="#" class="bg-red-300 hover:bg-red-400 text-white py-1 px-2 rounded ml-2" @click="deletePost" v-show="user._id === currentPost.user._id">eliminar</a>
                             </div>
@@ -84,6 +85,7 @@ export default {
             currentMode: this.mode,
             currentPost: this.post ? this.post : { content: '', isPublic: 'true', user: { name: '' } },
             showConfirmDelete: false,
+            votes: Math.floor(Math.random() * (9999 - 1)) + 1,
         };
     },
     computed: {
@@ -158,6 +160,11 @@ export default {
         },
         cancelDeletePost(e) {
             this.showConfirmDelete = false;
+
+            e.preventDefault();
+        },
+        like(e) {
+            this.votes += 1;
 
             e.preventDefault();
         },
