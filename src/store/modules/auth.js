@@ -17,6 +17,7 @@ const actions = {
         return authDataSource.login(payload)
             .then((response) => {
                 if (response && response.body && response.body.status.code === 'OK') {
+                    commit('SET_LOGIN_STATUS', '');
                     commit('AUTH_SUCCESS', response);
                 }
 
@@ -42,6 +43,9 @@ const actions = {
         Vue.http.headers.common.Authorization = `Bearer ${VueCookie.get('lab_auth')}`;
 
         return true;
+    },
+    setLoginStatus({ commit }, status) {
+        commit('SET_LOGIN_STATUS', status);
     },
 };
 
@@ -76,6 +80,9 @@ const mutations = {
     },
     SET_USER(_state, user) {
         _state.user = user;
+    },
+    SET_LOGIN_STATUS(_state, status) {
+        _state.loginStatus = status;
     },
 };
 
